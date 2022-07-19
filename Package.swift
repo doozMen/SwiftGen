@@ -1,4 +1,5 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.7
+
 import PackageDescription
 
 let package = Package(
@@ -7,9 +8,10 @@ let package = Package(
     .macOS(.v10_11),
   ],
   products: [
-    .executable(name: "swiftgen", targets: ["SwiftGen"]),
+    .executable(name: "swiftgen", targets: ["swiftgen"]),
     .library(name: "SwiftGenCLI", targets: ["SwiftGenCLI"]),
     .library(name: "SwiftGenKit", targets: ["SwiftGenKit"]),
+    .plugin(name: "SwiftGenPlugin", targets: ["SwiftGenPlugin"])
   ],
   dependencies: [
     .package(url: "https://github.com/jpsim/Yams.git", from: "4.0.6"),
@@ -21,7 +23,12 @@ let package = Package(
     .package(url: "https://github.com/tid-kijyun/Kanna.git", from: "5.2.7")
   ],
   targets: [
-    .target(name: "SwiftGen", dependencies: [
+    .plugin(
+        name: "SwiftGenPlugin",
+        capability: .buildTool(),
+        dependencies: ["swiftgen"]
+    ),
+    .executableTarget(name: "swiftgen", dependencies: [
       "SwiftGenCLI"
     ]),
     .target(name: "SwiftGenCLI", dependencies: [
@@ -39,7 +46,8 @@ let package = Package(
       "Kanna",
       "PathKit",
       "Yams"
-    ]),
+    ]
+    ),
     .testTarget(name: "SwiftGenKitTests", dependencies: [
       "SwiftGenKit",
       "TestUtils"
