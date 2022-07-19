@@ -18,7 +18,7 @@ struct SwiftGenPlugin: BuildToolPlugin {
                 displayName: "run swiftgen from plugin",
                 executable: tool.path,
                 arguments: CommandLine.arguments,
-                inputFiles: <#T##[Path]#>
+                inputFiles: [swiftgenConfig.path]
             )
         ]
     }
