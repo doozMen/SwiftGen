@@ -22,15 +22,16 @@ public enum Fonts {
     public static let defaultFilter = filterRegex(forExtensions: ["otf", "ttc", "ttf"])
 
     public func parse(path: Path, relativeTo parent: Path) throws {
-      guard let values = try? path.url.resourceValues(forKeys: [.typeIdentifierKey]),
-        let uti = values.typeIdentifier else {
-        warningHandler?("Unable to determine the Universal Type Identifier for file \(path)", #file, #line)
-        return
-      }
-      guard UTTypeConformsTo(uti as CFString, kUTTypeFont) else {
-        warningHandler?("File is not a known font type: \(path)", #file, #line)
-        return
-      }
+        // TODO: unclear why when runnin in a plugin this check fails, also not clear why check is needed
+//      guard let values = try? path.url.resourceValues(forKeys: [.typeIdentifierKey]),
+//        let uti = values.typeIdentifier else {
+//        warningHandler?("Unable to determine the Universal Type Identifier for file \(path)", #file, #line)
+//        return
+//      }
+//      guard UTTypeConformsTo(uti as CFString, kUTTypeFont) else {
+//        warningHandler?("File is not a known font type: \(path)", #file, #line)
+//        return
+//      }
 
       let fonts = CTFont.parse(file: path, relativeTo: parent)
       fonts.forEach { addFont($0) }
