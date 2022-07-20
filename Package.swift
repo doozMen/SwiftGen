@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.6
 import PackageDescription
 
 let package = Package(
@@ -21,7 +21,7 @@ let package = Package(
     .package(url: "https://github.com/tid-kijyun/Kanna.git", from: "5.2.7")
   ],
   targets: [
-    .target(name: "SwiftGen", dependencies: [
+    .executableTarget(name: "SwiftGen", dependencies: [
       "SwiftGenCLI"
     ]),
     .target(name: "SwiftGenCLI", dependencies: [
